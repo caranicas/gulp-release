@@ -5,7 +5,6 @@ module.exports = function (gulp) {
     var fs = require('fs');
     var git = require('gulp-git');
     var jeditor = require("gulp-json-editor");
-    var runSequence = require('gulp-run-sequence');
     var spawn = require('child_process').spawn;
     var semver = require('semver');
     var tag_version = require('./tag_version');
@@ -41,21 +40,27 @@ module.exports = function (gulp) {
         })
     };
 
-    gulp.task('complete-release', function (cb) {
-        runSequence('tag-and-push', 'npm-publish', 'bump', cb);
-    });
+    gulp.task('complete-release', gulp.series(
+        'tag-and-push',
+        'npm-publish',
+        'bump'
+    ));
 
-    gulp.task('bump-complete-release', function (cb) {
-        runSequence('bump', 'tag-and-push', 'npm-publish', cb);
-    });
+    gulp.task('bump-complete-release', gulp.series(
+        'bump', 
+        'tag-and-push',
+        'npm-publish'
+    ));
 
-    gulp.task('release', function (cb) {
-        runSequence('tag-and-push', 'bump', cb);
-    });
+    gulp.task('release', gulp.series(
+        'tag-and-push',
+        'bump'
+    ));
 
-    gulp.task('bump-release', function (cb) {
-        runSequence('bump', 'tag-and-push', cb);
-    });
+    gulp.task('bump-release', gulp.series(
+       'bump',
+       'tag-and-push'
+    ));
 
     gulp.task('tag-and-push', function (done) {
         gulp.src('./', {cwd: rootDir})

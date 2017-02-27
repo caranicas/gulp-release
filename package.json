@@ -10,7 +10,6 @@
     "gulp-json-editor": "2.2.1",
     "gulp-git": "1.11.3",
     "gulp-prompt": "0.2.0",
-    "gulp-run-sequence": "0.3.2",
     "gulp-util": "3.0.7",
     "lodash": "4.16.4",
     "map-stream": "0.0.6",
